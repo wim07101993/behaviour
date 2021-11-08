@@ -15,3 +15,7 @@ pubspec.lock
 
 # Generated documentation
 doc/api
+
+# Test coverage
+coverage
+test/.test_coverage.dart
