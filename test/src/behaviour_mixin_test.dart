@@ -35,6 +35,19 @@ void main() {
     );
   });
 
+  group('monitor', () {
+    test('should default to null', () {
+      // act
+      behaviour = _BehaviourMixinImpl(
+        description: faker.lorem.sentence(),
+        onCatch: mockOnCatch.onCatch,
+      );
+
+      // assert
+      expect(behaviour.monitor, isNull);
+    });
+  });
+
   group('tag', () {
     test('should return the type name', () {
       // act
