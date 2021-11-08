@@ -6,31 +6,30 @@ import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import '../mocks.dart';
-import 'behaviour_mixin_test.dart';
 
 part 'behaviour_without_input_test.types.dart';
 
 void main() {
   late String fakeDescription;
 
-  late MockAction mockAction;
+  late _MockAction mockAction;
   late MockBehaviourMonitor mockMonitor;
 
-  late BehaviourWithoutInputImpl behaviour;
+  late _BehaviourWithoutInputImpl behaviour;
 
   setUpAll(() {
-    registerFallbackValue(BehaviourWithoutInputImpl(
-      action: MockAction().action,
+    registerFallbackValue(_BehaviourWithoutInputImpl(
+      action: _MockAction().action,
       description: '',
     ));
   });
 
   setUp(() {
     fakeDescription = faker.lorem.sentence();
-    mockAction = MockAction();
+    mockAction = _MockAction();
     mockMonitor = MockBehaviourMonitor();
 
-    behaviour = BehaviourWithoutInputImpl(
+    behaviour = _BehaviourWithoutInputImpl(
       action: mockAction.action,
       monitor: mockMonitor,
       description: fakeDescription,

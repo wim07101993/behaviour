@@ -11,12 +11,12 @@ part 'behaviour_mixin_test.types.dart';
 
 void main() {
   late MockBehaviourMonitor mockMonitor;
-  late MockOnCatch mockOnCatch;
+  late _MockOnCatch mockOnCatch;
 
   late BehaviourMixin behaviour;
 
   setUpAll(() {
-    registerFallbackValue(BehaviourMixinImpl(
+    registerFallbackValue(_BehaviourMixinImpl(
       onCatch: (e, stacktrace, track) => Exception(),
       description: '',
     ));
@@ -26,9 +26,9 @@ void main() {
 
   setUp(() {
     mockMonitor = MockBehaviourMonitor();
-    mockOnCatch = MockOnCatch();
+    mockOnCatch = _MockOnCatch();
 
-    behaviour = BehaviourMixinImpl(
+    behaviour = _BehaviourMixinImpl(
       description: faker.lorem.sentence(),
       onCatch: mockOnCatch.onCatch,
       monitor: mockMonitor,
@@ -56,7 +56,7 @@ void main() {
 
     test('should work without monitor', () async {
       // arrange
-      behaviour = BehaviourMixinImpl(
+      behaviour = _BehaviourMixinImpl(
         description: faker.lorem.sentence(),
         onCatch: mockOnCatch.onCatch,
       );

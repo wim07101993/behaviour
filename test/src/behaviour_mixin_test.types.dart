@@ -1,11 +1,9 @@
 part of 'behaviour_mixin_test.dart';
 
-class MockOnCatch extends Mock implements OnCatch {}
+class _MockOnCatch extends Mock implements _OnCatch {}
 
-class MockBehaviourTrack extends Mock implements BehaviourTrack {}
-
-class BehaviourMixinImpl with BehaviourMixin {
-  BehaviourMixinImpl({
+class _BehaviourMixinImpl with BehaviourMixin {
+  _BehaviourMixinImpl({
     this.monitor,
     required this.description,
     required FutureOr<Exception> Function(
@@ -37,7 +35,7 @@ class BehaviourMixinImpl with BehaviourMixin {
   }
 }
 
-class OnCatch {
+class _OnCatch {
   FutureOr<Exception> onCatch(
     Object e,
     StackTrace stacktrace,

@@ -1,9 +1,9 @@
 part of 'behaviour_without_input_test.dart';
 
-class MockAction<TOut> extends Mock implements Action<TOut> {}
+class _MockAction<TOut> extends Mock implements _Action<TOut> {}
 
-class BehaviourWithoutInputImpl<TOut> extends BehaviourWithoutInput<TOut> {
-  BehaviourWithoutInputImpl({
+class _BehaviourWithoutInputImpl<TOut> extends BehaviourWithoutInput<TOut> {
+  _BehaviourWithoutInputImpl({
     required Future<TOut> Function(BehaviourTrack? track) action,
     required this.description,
     BehaviourMonitor? monitor,
@@ -30,7 +30,7 @@ class BehaviourWithoutInputImpl<TOut> extends BehaviourWithoutInput<TOut> {
   }
 }
 
-class Action<TOut> {
+class _Action<TOut> {
   Future<TOut> action(BehaviourTrack? track) {
     throw UnimplementedError();
   }

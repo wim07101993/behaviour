@@ -14,7 +14,7 @@ void main() {
       final mockMonitor = MockBehaviourMonitor();
 
       // act
-      final behaviour = BehaviourBaseImpl(mockMonitor);
+      final behaviour = _BehaviourBaseImpl(mockMonitor);
 
       // assert
       expect(behaviour.monitor, mockMonitor);
