@@ -38,10 +38,7 @@ void main() {
   group('monitor', () {
     test('should default to null', () {
       // act
-      behaviour = _BehaviourMixinImpl(
-        description: faker.lorem.sentence(),
-        onCatch: mockOnCatch.onCatch,
-      );
+      behaviour = _BareBehaviourMixinImpl();
 
       // assert
       expect(behaviour.monitor, isNull);

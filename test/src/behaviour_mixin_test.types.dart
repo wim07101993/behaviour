@@ -2,6 +2,17 @@ part of 'behaviour_mixin_test.dart';
 
 class _MockOnCatch extends Mock implements _OnCatch {}
 
+class _BareBehaviourMixinImpl with BehaviourMixin {
+  @override
+  String get description => '';
+
+  @override
+  FutureOr<Exception> onCatch(
+      Object e, StackTrace stacktrace, BehaviourTrack? track) {
+    return Exception();
+  }
+}
+
 class _BehaviourMixinImpl with BehaviourMixin {
   _BehaviourMixinImpl({
     this.monitor,
@@ -15,7 +26,8 @@ class _BehaviourMixinImpl with BehaviourMixin {
   }) : _onCatch = onCatch;
 
   @override
-  final BehaviourMonitor? monitor;
+  BehaviourMonitor? monitor;
+
   @override
   final String description;
 
