@@ -54,7 +54,7 @@ void main() {
       final tag = behaviour.tag;
 
       // assert
-      expect(tag, 'BehaviourMixinImpl');
+      expect(tag, '_BehaviourMixinImpl');
     });
   });
 
