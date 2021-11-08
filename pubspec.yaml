@@ -1,6 +1,9 @@
 name: behaviour
-description: A starting point for Dart libraries or applications.
+description:
+  This package adds support for behaviours. Behaviours are classes of which the
+  instances are used as functions.
 version: 0.0.1
+repository: https://github.com/wim07101993/behaviour
 
 environment:
   sdk: '>=2.14.4 <3.0.0'
