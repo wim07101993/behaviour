@@ -19,16 +19,21 @@ jobs:
         run: dart pub get
 
       - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
       - name: Analyze project source
-        run: dart analyze --fatal-infos
+        run: dart analyze --fatal-infos --fatal-warnings
         
-      - name: Run tests
-        run: dart test
+      - name: Run Tests
+        run: |
+          pub global activate test_coverage
+          export PATH=$PATH:$HOME/.pub-cache/bin
+          test_coverage
         
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        with:
+          min_coverage: 90
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
