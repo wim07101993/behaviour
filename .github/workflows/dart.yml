@@ -47,4 +47,4 @@ jobs:
         run: dart analyze --fatal-infos --fatal-warnings
         
       - name: Verify Pub Score
-        run: tool/verify_pub_score.sh
+        run: tool/ensure_pana_score.sh
