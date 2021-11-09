@@ -1,3 +1,5 @@
+/// This package adds support for behaviours. Behaviours are classes of which
+/// the instances are used as functions.
 library behaviour;
 
 export 'src/behaviour.dart';
