@@ -7,29 +7,20 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  code-tests:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - uses: dart-lang/setup-dart@v1.3
-
       - name: Install dependencies
         run: dart pub get
 
-      - name: Verify formatting
-        run: dart format --set-exit-if-changed .
-
-      - name: Analyze project source
-        run: dart analyze --fatal-infos --fatal-warnings
-        
       - name: Run Tests
         run: |
           pub global activate test_coverage
           export PATH=$PATH:$HOME/.pub-cache/bin
           test_coverage
-        
+                
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
@@ -39,3 +30,21 @@ jobs:
         uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+        
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.3
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Verify formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Analyze source code
+        run: dart analyze --fatal-infos --fatal-warnings
+        
+      - name: Verify Pub Score
+        run: tool/verify_pub_score.sh
