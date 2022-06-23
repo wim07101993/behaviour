@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'behaviour_monitor.dart';
-import 'exception_or.dart';
+import 'package:behaviour/behaviour.dart';
 
 /// An alias for a function which returns a
 /// [FutureOr<ExceptionOr<TOut>>]. A [track] parameter is passed with which

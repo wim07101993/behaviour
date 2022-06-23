@@ -1,8 +1,4 @@
-import 'package:behaviour/src/behaviour_monitor.dart';
-
-import 'behaviour.dart';
-import 'behaviour_base.dart';
-import 'exception_or.dart';
+import 'package:behaviour/behaviour.dart';
 
 /// A [BehaviourWithoutInput] is a type which only has one function, it's
 /// behaviour. It is comparable with a global function which must be
@@ -15,7 +11,8 @@ import 'exception_or.dart';
 /// A behaviour returns when called an [Future<ExceptionOr<TSuccess>>] value.
 /// This can either be a [Failed] or a [Success]. To query which one it is
 /// call the [thenWhen] method on the [Future].
-abstract class BehaviourWithoutInput<TOut> extends BehaviourBase {
+abstract class BehaviourWithoutInput<TOut> extends BehaviourBase
+    implements BehaviourWithoutInputInterface<TOut> {
   /// Super does not need to be called by it's implementers. It only sets the
   /// [monitor] by which the behaviour can be monitored.
   BehaviourWithoutInput({
@@ -25,6 +22,7 @@ abstract class BehaviourWithoutInput<TOut> extends BehaviourBase {
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped
   /// in a [Failed].
+  @override
   Future<ExceptionOr<TOut>> call() {
     return executeAction((track) async => Success(await action(track)));
   }
@@ -34,5 +32,6 @@ abstract class BehaviourWithoutInput<TOut> extends BehaviourBase {
   /// [track] can be used for monitoring. The [BehaviourTrack.start],
   /// [BehaviourTrack.end], [BehaviourTrack.stopWithException] and
   /// [BehaviourTrack.stopWithError] are called from the super class.
+  @override
   Future<TOut> action(BehaviourTrack? track);
 }

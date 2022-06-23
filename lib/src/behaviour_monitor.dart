@@ -1,4 +1,4 @@
-import 'behaviour_mixin.dart';
+import 'package:behaviour/behaviour.dart';
 
 /// A track by which a [BehaviourMixin] can be monitored.
 ///

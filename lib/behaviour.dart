@@ -4,7 +4,9 @@ library behaviour;
 
 export 'src/behaviour.dart';
 export 'src/behaviour_base.dart';
+export 'src/behaviour_interface.dart';
 export 'src/behaviour_mixin.dart';
 export 'src/behaviour_monitor.dart';
 export 'src/behaviour_without_input.dart';
+export 'src/behaviour_without_input_interface.dart';
 export 'src/exception_or.dart';

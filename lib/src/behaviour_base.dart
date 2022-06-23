@@ -1,6 +1,4 @@
-import 'package:behaviour/src/behaviour_monitor.dart';
-
-import 'behaviour_mixin.dart';
+import 'package:behaviour/behaviour.dart';
 
 /// A base class for a behaviour. It implements some abstract properties of a
 /// [BehaviourMixin] and injects them through the constructor (like the monitor).
