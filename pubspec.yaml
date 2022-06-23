@@ -2,14 +2,14 @@ name: behaviour
 description:
   This package adds support for behaviours. Behaviours are classes of which the
   instances are used as functions.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/wim07101993/behaviour
 
 environment:
   sdk: '>=2.14.4 <3.0.0'
 
 dependencies:
-  async: ^2.9.0
+  async: ^2.8.2 # flutter_test depends on 2.8.2 so don't upgrade it
 
 dev_dependencies:
   faker: ^2.0.0

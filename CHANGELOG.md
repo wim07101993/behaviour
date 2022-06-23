@@ -6,4 +6,8 @@
 
 * Added the `BehaviourInterface` and `BehaviourInterface`
 * Upgraded dependencies
+
+## 0.0.3
+
+* Downgrade `async` package dependency to be compatible with flutter
  
