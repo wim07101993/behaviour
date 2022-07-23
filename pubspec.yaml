@@ -9,10 +9,10 @@ environment:
   sdk: '>=2.14.4 <3.0.0'
 
 dependencies:
-  async: ^2.8.2 # flutter_test depends on 2.8.2 so don't upgrade it
+  async: ">=2.0.0 <3.0.0"
 
 dev_dependencies:
-  faker: ^2.0.0
-  lint: ^1.8.2
-  mocktail: ^0.3.0
-  test: ^1.21.3
+  faker: ">=2.0.0 <3.0.0"
+  lint: 
+  mocktail: ">0.0.0 <1.0.0"
+  test: ">=1.0.0 <2.0.0"
