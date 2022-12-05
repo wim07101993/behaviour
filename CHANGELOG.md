@@ -1,13 +1,16 @@
-## 0.0.1
+## 0.1.0
 
-* Initial version.
+* feat: added default implementation for `onCatch`
+
+## 0.0.3
+
+* Downgrade `async` package dependency to be compatible with flutter
 
 ## 0.0.2
 
 * Added the `BehaviourInterface` and `BehaviourInterface`
 * Upgraded dependencies
 
-## 0.0.3
+## 0.0.1
 
-* Downgrade `async` package dependency to be compatible with flutter
- 
+* Initial version.
