@@ -17,11 +17,11 @@ class _BehaviourMixinImpl with BehaviourMixin {
   _BehaviourMixinImpl({
     this.monitor,
     required this.description,
-    required FutureOr<Exception> Function(
+    FutureOr<Exception> Function(
       Object e,
       StackTrace stacktrace,
       BehaviourTrack? track,
-    )
+    )?
         onCatch,
   }) : _onCatch = onCatch;
 
@@ -35,7 +35,7 @@ class _BehaviourMixinImpl with BehaviourMixin {
     Object e,
     StackTrace stacktrace,
     BehaviourTrack? track,
-  ) _onCatch;
+  )? _onCatch;
 
   @override
   FutureOr<Exception> onCatch(
@@ -43,7 +43,10 @@ class _BehaviourMixinImpl with BehaviourMixin {
     StackTrace stacktrace,
     BehaviourTrack? track,
   ) {
-    return _onCatch(e, stacktrace, track);
+    final fakeCatch = _onCatch;
+    return fakeCatch != null
+        ? fakeCatch(e, stacktrace, track)
+        : super.onCatch(e, stacktrace, track);
   }
 }
 

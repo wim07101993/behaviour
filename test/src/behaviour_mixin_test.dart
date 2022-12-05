@@ -154,4 +154,38 @@ void main() {
       verify(() => mockTrack.stopWithError(error, any()));
     });
   });
+
+  group('onCatch', () {
+    test('should return the input exception if e was an exception', () async {
+      // arrange
+      behaviour = _BehaviourMixinImpl(description: faker.lorem.sentence());
+      final exception = Exception(faker.lorem.sentence());
+
+      // act
+      final resultException = await behaviour.onCatch(
+        exception,
+        StackTrace.current,
+        mockMonitor.createBehaviourTrack(behaviour),
+      );
+
+      // assert
+      expect(resultException, exception);
+    });
+
+    test('should return a default exception if e was no exception', () async {
+      // arrange
+      behaviour = _BehaviourMixinImpl(description: faker.lorem.sentence());
+      final noException = faker.lorem.sentence();
+
+      // act
+      final resultException = await behaviour.onCatch(
+        noException,
+        StackTrace.current,
+        mockMonitor.createBehaviourTrack(behaviour),
+      );
+
+      // assert
+      expect(resultException.toString(), contains(noException));
+    });
+  });
 }

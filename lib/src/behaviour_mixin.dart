@@ -60,5 +60,11 @@ mixin BehaviourMixin {
     Object e,
     StackTrace stacktrace,
     BehaviourTrack? track,
-  );
+  ) {
+    if (e is Exception) {
+      return e;
+    } else {
+      return Exception('Unknown exception: $e');
+    }
+  }
 }
