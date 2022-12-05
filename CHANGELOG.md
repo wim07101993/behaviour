@@ -1,3 +1,7 @@
+## 1.0.0
+
+* feat! added value to `ExceptionOrSuccess.thenStartNextWhenSuccess`
+
 ## 0.1.0
 
 * feat: added default implementation for `onCatch`

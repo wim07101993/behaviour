@@ -100,11 +100,11 @@ extension FutureExceptionOrExtensions<T> on Future<ExceptionOr<T>> {
 
   /// Executes [next] only if the current future results in a [Success].
   Future<ExceptionOr<TSecondSuccess>> thenStartNextWhenSuccess<TSecondSuccess>(
-    Future<ExceptionOr<TSecondSuccess>> Function() next,
+    Future<ExceptionOr<TSecondSuccess>> Function(T value) next,
   ) {
     return thenWhen(
       (exception) => Failed(exception),
-      (value) => next(),
+      (value) => next(value),
     );
   }
 }

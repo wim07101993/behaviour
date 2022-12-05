@@ -185,7 +185,7 @@ void main() {
         final future = Future.value(failed);
 
         // act
-        final result = await future.thenStartNextWhenSuccess(() {
+        final result = await future.thenStartNextWhenSuccess((value) {
           return Future.value(Failed(Exception(faker.lorem.word())));
         });
 
@@ -200,7 +200,8 @@ void main() {
         final secondSuccess = Success(faker.lorem.word());
 
         // act
-        final result = await future.thenStartNextWhenSuccess(() {
+        final result = await future.thenStartNextWhenSuccess((value) {
+          expect(value, success.value);
           return Future.value(secondSuccess);
         });
 
