@@ -18,7 +18,7 @@ mixin BehaviourMixin {
 
   /// Describes what the action does in the form of:
   /// doing work.
-  String get description;
+  String get description => tag;
 
   /// A tag by which the behaviour can be found in e.g. logging.
   ///
