@@ -11,18 +11,6 @@ class GetProfileData extends BehaviourWithoutInput<ProfileData> {
       birthday: DateTime(1993, 10, 07),
     ));
   }
-
-  @override
-  String get description => 'getting profile data';
-
-  @override
-  FutureOr<Exception> onCatch(
-    Object e,
-    StackTrace stacktrace,
-    BehaviourTrack? track,
-  ) {
-    return Exception('An unknown error occurred: $e');
-  }
 }
 
 class ProfileData {

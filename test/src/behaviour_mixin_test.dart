@@ -11,14 +11,12 @@ part 'behaviour_mixin_test.types.dart';
 
 void main() {
   late MockBehaviourMonitor mockMonitor;
-  late _MockOnCatch mockOnCatch;
 
   late BehaviourMixin behaviour;
 
   setUpAll(() {
     registerFallbackValue(_BehaviourMixinImpl(
-      onCatch: (e, stacktrace, track) => Exception(),
-      description: '',
+      onCatchException: (e, stacktrace, track) => Exception(),
     ));
     registerFallbackValue(Exception());
     registerFallbackValue(StackTrace.empty);
@@ -26,11 +24,8 @@ void main() {
 
   setUp(() {
     mockMonitor = MockBehaviourMonitor();
-    mockOnCatch = _MockOnCatch();
 
     behaviour = _BehaviourMixinImpl(
-      description: faker.lorem.sentence(),
-      onCatch: mockOnCatch.onCatch,
       monitor: mockMonitor,
     );
   });
@@ -42,6 +37,16 @@ void main() {
 
       // assert
       expect(behaviour.monitor, isNull);
+    });
+  });
+
+  group('description', () {
+    test('should return the tag', () {
+      // act
+      final description = behaviour.description;
+
+      // assert
+      expect(description, '_BehaviourMixinImpl');
     });
   });
 
@@ -66,10 +71,7 @@ void main() {
 
     test('should work without monitor', () async {
       // arrange
-      behaviour = _BehaviourMixinImpl(
-        description: faker.lorem.sentence(),
-        onCatch: mockOnCatch.onCatch,
-      );
+      behaviour = _BehaviourMixinImpl();
 
       // assert
       await behaviour.executeAction((track) {
@@ -117,8 +119,6 @@ void main() {
         () async {
       // arrange
       final exception = Exception();
-      when(() => mockOnCatch.onCatch(any(), any(), any()))
-          .thenAnswer((invocation) => exception);
 
       // act
       final result = await behaviour.executeAction((track) => throw exception);
@@ -133,14 +133,29 @@ void main() {
     });
 
     test(
-        'should stop track with error and return failed if an unknown error happens in the action',
+        'should stop track with error if an unknown error happens in the action',
         () async {
       // arrange
       final error = faker.lorem.sentence();
+
+      // act
+      final result = await behaviour.executeAction((track) => throw error);
+
+      // assert
+      expect(result, isA<Failed>());
+      verify(() => mockTrack.stopWithError(any(), any()));
+    });
+
+    test('should return failed if an unknown error happens in the action',
+        () async {
+      // arrange
+      final error = faker.lorem.sentence();
+      final mockOnCatch = _MockOnCatch();
       final exception = Exception();
       when(() => mockOnCatch.onCatch(any(), any(), any())).thenAnswer((_) {
         return exception;
       });
+      behaviour = _BehaviourMixinImpl(onCatchError: mockOnCatch.onCatch);
 
       // act
       final result = await behaviour.executeAction((track) => throw error);
@@ -151,18 +166,17 @@ void main() {
         (e) => expect(e, exception),
         (value) => throw AssertionError('The result should be a failed.'),
       );
-      verify(() => mockTrack.stopWithError(error, any()));
     });
   });
 
-  group('onCatch', () {
+  group('onCatchException', () {
     test('should return the input exception if e was an exception', () async {
       // arrange
-      behaviour = _BehaviourMixinImpl(description: faker.lorem.sentence());
+      behaviour = _BehaviourMixinImpl();
       final exception = Exception(faker.lorem.sentence());
 
       // act
-      final resultException = await behaviour.onCatch(
+      final resultException = await behaviour.onCatchException(
         exception,
         StackTrace.current,
         mockMonitor.createBehaviourTrack(behaviour),
@@ -171,14 +185,16 @@ void main() {
       // assert
       expect(resultException, exception);
     });
+  });
 
+  group('onCatchError', () {
     test('should return a default exception if e was no exception', () async {
       // arrange
-      behaviour = _BehaviourMixinImpl(description: faker.lorem.sentence());
+      behaviour = _BehaviourMixinImpl();
       final noException = faker.lorem.sentence();
 
       // act
-      final resultException = await behaviour.onCatch(
+      final resultException = await behaviour.onCatchError(
         noException,
         StackTrace.current,
         mockMonitor.createBehaviourTrack(behaviour),

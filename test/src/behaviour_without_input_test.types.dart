@@ -19,15 +19,6 @@ class _BehaviourWithoutInputImpl<TOut> extends BehaviourWithoutInput<TOut> {
 
   @override
   final String description;
-
-  @override
-  FutureOr<Exception> onCatch(
-    Object e,
-    StackTrace stacktrace,
-    BehaviourTrack? track,
-  ) {
-    return Exception();
-  }
 }
 
 class _Action<TOut> {
