@@ -43,28 +43,49 @@ mixin BehaviourMixin {
       track?.end();
       return either;
     } on Exception catch (exception, stackTrace) {
-      track?.stopWithException(exception, stackTrace);
-      return Failed(await onCatch(exception, stackTrace, track));
+      print('CATCH EXCEPTION');
+      return Failed(await onCatchException(exception, stackTrace, track));
     } catch (error, stackTrace) {
-      track?.stopWithError(error, stackTrace);
-      return Failed(await onCatch(error, stackTrace, track));
+      print('CATCH ERROR');
+      return Failed(await onCatchError(error, stackTrace, track));
     }
   }
 
-  /// Is invoked when something is caught by the try-catch block in
+  /// Is invoked when an exception is caught by the try-catch block in
   /// [executeAction].
   ///
-  /// [e] and [stackTrace] are passed directly from the catch parameters.
-  /// [track] is the track with which the curren action is being monitored.
-  FutureOr<Exception> onCatch(
-    Object e,
+  /// [exception] and [stackTrace] are passed directly from the catch parameters.
+  /// [track] is the track with which the current action is being monitored.
+  ///
+  /// When overriding this method, the track should be stopped manually or the
+  /// super method should be called to invoke it.
+  FutureOr<Exception> onCatchException(
+    Exception exception,
     StackTrace stacktrace,
     BehaviourTrack? track,
   ) {
-    if (e is Exception) {
-      return e;
+    track?.stopWithException(exception, stacktrace);
+    return exception;
+  }
+
+  /// Is invoked when something which is not an exception is caught by the
+  /// try-catch block in [executeAction].
+  ///
+  /// [error] and [stackTrace] are passed directly from the catch parameters.
+  /// [track] is the track with which the current action is being monitored.
+  ///
+  /// When overriding this method, the track should be stopped manually or the
+  /// super method should be called to invoke it.
+  FutureOr<Exception> onCatchError(
+    Object error,
+    StackTrace stacktrace,
+    BehaviourTrack? track,
+  ) {
+    track?.stopWithError(error, stacktrace);
+    if (error is Exception) {
+      return error;
     } else {
-      return Exception('Unknown exception: $e');
+      return Exception('Unknown exception: $error');
     }
   }
 }

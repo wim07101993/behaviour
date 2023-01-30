@@ -10,10 +10,7 @@ class CreateCustomer extends Behaviour<CreateCustomerParams, void> {
   }
 
   @override
-  String get description => 'creating client';
-
-  @override
-  FutureOr<Exception> onCatch(
+  FutureOr<Exception> onCatchError(
     Object e,
     StackTrace stacktrace,
     BehaviourTrack? track,
