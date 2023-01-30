@@ -43,10 +43,8 @@ mixin BehaviourMixin {
       track?.end();
       return either;
     } on Exception catch (exception, stackTrace) {
-      print('CATCH EXCEPTION');
       return Failed(await onCatchException(exception, stackTrace, track));
     } catch (error, stackTrace) {
-      print('CATCH ERROR');
       return Failed(await onCatchError(error, stackTrace, track));
     }
   }
