@@ -1,3 +1,9 @@
+## 2.0.0
+
+* feat: added helper methods for ExceptionOr
+* feat: auto implemented description
+* fix: fir call onCatch, then stop with error
+
 ## 1.0.0
 
 * feat! added value to `ExceptionOrSuccess.thenStartNextWhenSuccess`
