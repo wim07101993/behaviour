@@ -17,6 +17,20 @@ abstract class ExceptionOr<TSuccess> {
     TResult Function(TSuccess value) ifSuccess,
   );
 
+  ExceptionOr<TSuccess> whenSuccess(
+    void Function(TSuccess value) ifSuccess,
+  ) {
+    when((exception) {}, ifSuccess);
+    return this;
+  }
+
+  ExceptionOr<TSuccess> whenFailed(
+    void Function(Exception exception) ifFailed,
+  ) {
+    when(ifFailed, (value) {});
+    return this;
+  }
+
   /// Executes [next] only if the current implementation is [Success].
   ExceptionOr<TSecondSuccess> startNextWhenSuccess<TSecondSuccess>(
     ExceptionOr<TSecondSuccess> Function() next,

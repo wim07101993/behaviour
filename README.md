@@ -35,18 +35,6 @@ class CreateCustomer extends Behaviour<CreateCustomerParams, void> {
     // TODO logic to create a customer
     return Future.value();
   }
-
-  @override
-  String get description => 'creating client';
-
-  @override
-  FutureOr<Exception> onCatch(
-      Object e,
-      StackTrace stacktrace,
-      BehaviourTrack? track,
-      ) {
-    return Exception('An unknown error occurred: $e');
-  }
 }
 
 class CreateCustomerParams {
@@ -79,18 +67,6 @@ class GetProfileData extends BehaviourWithoutInput<ProfileData> {
       name: 'Wim',
       birthday: DateTime(1993, 10, 07),
     ));
-  }
-
-  @override
-  String get description => 'getting profile data';
-
-  @override
-  FutureOr<Exception> onCatch(
-    Object e,
-    StackTrace stacktrace,
-    BehaviourTrack? track,
-  ) {
-    return Exception('An unknown error occurred: $e');
   }
 }
 
