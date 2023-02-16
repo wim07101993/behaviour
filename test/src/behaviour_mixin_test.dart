@@ -15,9 +15,11 @@ void main() {
   late BehaviourMixin behaviour;
 
   setUpAll(() {
-    registerFallbackValue(_BehaviourMixinImpl(
-      onCatchException: (e, stacktrace, track) => Exception(),
-    ));
+    registerFallbackValue(
+      _BehaviourMixinImpl(
+        onCatchException: (e, stacktrace, track) => Exception(),
+      ),
+    );
     registerFallbackValue(Exception());
     registerFallbackValue(StackTrace.empty);
   });

@@ -18,10 +18,12 @@ void main() {
   late Behaviour behaviour;
 
   setUpAll(() {
-    registerFallbackValue(_BehaviourImpl(
-      action: _MockAction().action,
-      description: '',
-    ));
+    registerFallbackValue(
+      _BehaviourImpl(
+        action: _MockAction().action,
+        description: '',
+      ),
+    );
   });
 
   setUp(() {

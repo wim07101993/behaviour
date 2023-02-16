@@ -1,6 +1,7 @@
 # Behaviour
 
 [![codecov](https://codecov.io/gh/wim07101993/behaviour/branch/master/graph/badge.svg?token=2QPYSSZT03)](https://codecov.io/gh/wim07101993/behaviour)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Behaviours are classes of which the instances are used as functions.
 

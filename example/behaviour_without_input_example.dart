@@ -6,10 +6,12 @@ import 'package:behaviour/behaviour.dart';
 class GetProfileData extends BehaviourWithoutInput<ProfileData> {
   @override
   Future<ProfileData> action(BehaviourTrack? track) {
-    return Future.value(ProfileData(
-      name: 'Wim',
-      birthday: DateTime(1993, 10, 07),
-    ));
+    return Future.value(
+      ProfileData(
+        name: 'Wim',
+        birthday: DateTime(1993, 10, 07),
+      ),
+    );
   }
 }
 
