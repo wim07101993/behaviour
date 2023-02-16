@@ -33,12 +33,9 @@ abstract class ExceptionOr<TSuccess> {
 
   /// Executes [next] only if the current implementation is [Success].
   ExceptionOr<TSecondSuccess> startNextWhenSuccess<TSecondSuccess>(
-    ExceptionOr<TSecondSuccess> Function() next,
+    ExceptionOr<TSecondSuccess> Function(TSuccess value) next,
   ) {
-    return when(
-      (exception) => Failed(exception),
-      (value) => next(),
-    );
+    return when((exception) => Failed(exception), next);
   }
 }
 
@@ -112,13 +109,24 @@ extension FutureExceptionOrExtensions<T> on Future<ExceptionOr<T>> {
     return then((value) => value.when(ifFailed, ifSuccess));
   }
 
+  /// Executes [ifSuccess] if the future results in a[Success].
+  Future<ExceptionOr<T>> thenWhenSuccess<TResult>(
+    FutureOr<TResult> Function(T value) ifSuccess,
+  ) {
+    return then((value) => value.whenSuccess(ifSuccess));
+  }
+
+  /// Executes [ifFailed] if the future results in a [Failed].
+  Future<ExceptionOr<T>> thenWhenFailed<TResult>(
+    FutureOr<TResult> Function(Exception exception) ifFailed,
+  ) {
+    return then((value) => value.whenFailed(ifFailed));
+  }
+
   /// Executes [next] only if the current future results in a [Success].
   Future<ExceptionOr<TSecondSuccess>> thenStartNextWhenSuccess<TSecondSuccess>(
     Future<ExceptionOr<TSecondSuccess>> Function(T value) next,
   ) {
-    return thenWhen(
-      (exception) => Failed(exception),
-      (value) => next(value),
-    );
+    return thenWhen((exception) => Failed(exception), next);
   }
 }
