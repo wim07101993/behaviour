@@ -18,10 +18,12 @@ void main() {
   late _BehaviourWithoutInputImpl behaviour;
 
   setUpAll(() {
-    registerFallbackValue(_BehaviourWithoutInputImpl(
-      action: _MockAction().action,
-      description: '',
-    ));
+    registerFallbackValue(
+      _BehaviourWithoutInputImpl(
+        action: _MockAction().action,
+        description: '',
+      ),
+    );
   });
 
   setUp(() {

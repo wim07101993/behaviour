@@ -33,9 +33,11 @@ class CreateCustomerParams {
 
 Future<void> main() async {
   final createCustomer = CreateCustomer();
-  await createCustomer(const CreateCustomerParams(
-    name: 'Wim',
-    address: 'Somewhere in Belgium',
-    phoneNumber: '+32 xxx xx xx xx',
-  ));
+  await createCustomer(
+    const CreateCustomerParams(
+      name: 'Wim',
+      address: 'Somewhere in Belgium',
+      phoneNumber: '+32 xxx xx xx xx',
+    ),
+  );
 }
