@@ -1,3 +1,9 @@
+## 2.1.0
+
+* ci: pipelines
+* doc: updated readme
+* feat: added more extensions for `ExceptionOr`
+
 ## 2.0.0
 
 * feat: added helper methods for ExceptionOr
