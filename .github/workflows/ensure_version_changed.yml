@@ -1,0 +1,26 @@
+name: Ensure code quality
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ master ]
+    
+jobs:
+  ensure-version-different-from-master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: remove current pubspec
+        run: rm pubspec.yaml
+        
+      - name: download pubspec from main channel
+        run: wget pubspec.yaml https://raw.githubusercontent.com/wim07101993/behaviour/master/pubspec.yaml
+        
+      - name: check git changes
+        run: |
+          if [[ -z "$(git status --porcelain)" ]] ; then
+            echo "update version before merging to master"
+            exit 1
+          fi
+        
