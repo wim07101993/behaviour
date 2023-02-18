@@ -15,7 +15,9 @@ jobs:
         run: rm pubspec.yaml
         
       - name: download pubspec from main channel
-        run: wget pubspec.yaml https://raw.githubusercontent.com/wim07101993/behaviour/master/pubspec.yaml
+        uses: valitydev/action-download-file@v1.0.6
+        with:
+          url: https://raw.githubusercontent.com/wim07101993/behaviour/master/pubspec.yaml
         
       - name: check git changes
         run: |
