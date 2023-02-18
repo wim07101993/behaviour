@@ -19,6 +19,8 @@ jobs:
         with:
           url: https://raw.githubusercontent.com/wim07101993/behaviour/master/pubspec.yaml
         
+      - run: git status
+        
       - name: check git changes
         run: |
           if [[ -z "$(git status --porcelain)" ]] ; then
