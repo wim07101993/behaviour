@@ -1,4 +1,4 @@
-name: Ensure code quality
+name: Ensure version changed
 
 on:
   workflow_dispatch:

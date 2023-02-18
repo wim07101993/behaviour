@@ -2,7 +2,7 @@ name: behaviour
 description:
   This package adds support for behaviours. Behaviours are classes of which the
   instances are used as functions.
-version: 2.1.0
+version: 2.1.1
 repository: https://github.com/wim07101993/behaviour
 
 environment:
