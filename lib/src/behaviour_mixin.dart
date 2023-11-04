@@ -33,20 +33,47 @@ mixin BehaviourMixin {
   /// is added to the track.
   ///
   /// When something is caught in the try catch, the [onCatch] method is called
-  /// with the caught object, stacktrace and track as parameters. The result
+  /// with the caught object, stackTrace and track as parameters. The result
   /// of this [onCatch] method is then wrapped within a [Failed] and is returned.
-  Future<ExceptionOr<TOut>> executeAction<TOut>(Action<TOut> action) async {
+  FutureOr<ExceptionOr<TOut>> executeAction<TOut>(Action<TOut> action) {
     final track = monitor?.createBehaviourTrack(this);
     try {
       track?.start();
-      final either = await action(track);
-      track?.end();
-      return either;
-    } on Exception catch (exception, stackTrace) {
-      return Failed(await onCatchException(exception, stackTrace, track));
+      final futureOr = action(track);
+      if (futureOr is ExceptionOr<TOut>) {
+        track?.end();
+        return futureOr;
+      }
+      return _catchFutureError(futureOr, track);
     } catch (error, stackTrace) {
-      return Failed(await onCatchError(error, stackTrace, track));
+      return _catch(error, stackTrace, track);
     }
+  }
+
+  Future<ExceptionOr<TOut>> _catchFutureError<TOut>(
+    Future<ExceptionOr<TOut>> future,
+    BehaviourTrack? track,
+  ) async {
+    try {
+      return await future;
+    } catch (error, stackTrace) {
+      return _catch(error, stackTrace, track);
+    }
+  }
+
+  FutureOr<ExceptionOr<TOut>> _catch<TOut>(
+    Object error,
+    StackTrace stackTrace,
+    BehaviourTrack? track,
+  ) {
+    final futureOrException = error is Exception
+        ? onCatchException(error, stackTrace, track)
+        : onCatchError(error, stackTrace, track);
+
+    return futureOrException.whenFutureOrValue(
+      (future) => future.then((exception) => Failed(exception)),
+      (exception) => Failed(exception),
+    );
   }
 
   /// Is invoked when an exception is caught by the try-catch block in
@@ -59,10 +86,10 @@ mixin BehaviourMixin {
   /// super method should be called to invoke it.
   FutureOr<Exception> onCatchException(
     Exception exception,
-    StackTrace stacktrace,
+    StackTrace stackTrace,
     BehaviourTrack? track,
   ) {
-    track?.stopWithException(exception, stacktrace);
+    track?.stopWithException(exception, stackTrace);
     return exception;
   }
 
@@ -76,10 +103,10 @@ mixin BehaviourMixin {
   /// super method should be called to invoke it.
   FutureOr<Exception> onCatchError(
     Object error,
-    StackTrace stacktrace,
+    StackTrace stackTrace,
     BehaviourTrack? track,
   ) {
-    track?.stopWithError(error, stacktrace);
+    track?.stopWithError(error, stackTrace);
     if (error is Exception) {
       return error;
     } else {

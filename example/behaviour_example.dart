@@ -12,7 +12,7 @@ class CreateCustomer extends Behaviour<CreateCustomerParams, void> {
   @override
   FutureOr<Exception> onCatchError(
     Object e,
-    StackTrace stacktrace,
+    StackTrace stackTrace,
     BehaviourTrack? track,
   ) {
     return Exception('An unknown error occurred: $e');

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:behaviour/behaviour.dart';
 
 /// A [BehaviourWithoutInputInterface] is a type which only has one function,
@@ -15,7 +17,7 @@ abstract class BehaviourWithoutInputInterface<TOut> {
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped
   /// in a [Failed].
-  Future<ExceptionOr<TOut>> call();
+  FutureOr<ExceptionOr<TOut>> call();
 
   /// [action] contains the actual logic of the behaviour.
   ///
@@ -25,5 +27,5 @@ abstract class BehaviourWithoutInputInterface<TOut> {
   /// [track] can be used for monitoring. The [BehaviourTrack.start],
   /// [BehaviourTrack.end], [BehaviourTrack.stopWithException] and
   /// [BehaviourTrack.stopWithError] are called from the super class.
-  Future<TOut> action(BehaviourTrack? track);
+  FutureOr<TOut> action(BehaviourTrack? track);
 }

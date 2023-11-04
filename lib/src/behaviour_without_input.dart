@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:behaviour/behaviour.dart';
 
 /// A [BehaviourWithoutInput] is a type which only has one function, it's
@@ -15,16 +17,19 @@ abstract class BehaviourWithoutInput<TOut> extends BehaviourBase
     implements BehaviourWithoutInputInterface<TOut> {
   /// Super does not need to be called by it's implementers. It only sets the
   /// [monitor] by which the behaviour can be monitored.
-  BehaviourWithoutInput({
-    BehaviourMonitor? monitor,
-  }) : super(monitor: monitor);
+  BehaviourWithoutInput({super.monitor});
 
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped
   /// in a [Failed].
   @override
-  Future<ExceptionOr<TOut>> call() {
-    return executeAction((track) async => Success(await action(track)));
+  FutureOr<ExceptionOr<TOut>> call() {
+    return executeAction((track) {
+      return action(track).whenFutureOrValue(
+        (future) => future.then((result) => Success(result)),
+        (result) => Success(result),
+      );
+    });
   }
 
   /// [action] contains the actual logic of the behaviour.
@@ -33,5 +38,5 @@ abstract class BehaviourWithoutInput<TOut> extends BehaviourBase
   /// [BehaviourTrack.end], [BehaviourTrack.stopWithException] and
   /// [BehaviourTrack.stopWithError] are called from the super class.
   @override
-  Future<TOut> action(BehaviourTrack? track);
+  FutureOr<TOut> action(BehaviourTrack? track);
 }

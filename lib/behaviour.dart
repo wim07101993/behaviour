@@ -10,3 +10,5 @@ export 'src/behaviour_monitor.dart';
 export 'src/behaviour_without_input.dart';
 export 'src/behaviour_without_input_interface.dart';
 export 'src/exception_or.dart';
+export 'src/exception_or_extensions.dart';
+export 'src/future_or_extensions.dart';

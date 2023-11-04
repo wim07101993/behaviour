@@ -84,7 +84,22 @@ void main() {
       final result = await behaviour(faker.lorem.sentence());
 
       // assert
-      expect(result, Success(value));
+      expect(result, Success<dynamic>(value));
+    });
+
+    test('should make use of the [FutureOr] functionality when success',
+        () async {
+      // arrange
+      final value = _DummyType(1);
+      when(() => mockAction.action(any(), any())).thenAnswer((i) => value);
+
+      // act
+      final result = behaviour(faker.lorem.sentence());
+
+      // assert
+      expect(result, isA<Success>());
+      final resultValue = (result as Success).value;
+      expect(identical(resultValue, value), isTrue);
     });
   });
 }

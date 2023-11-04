@@ -1,7 +1,7 @@
 part of 'behaviour_track_test.dart';
 
 class _BehaviourTrackImpl extends BehaviourTrack {
-  const _BehaviourTrackImpl(BehaviourMixin behaviour) : super(behaviour);
+  const _BehaviourTrackImpl(super.behaviour);
 
   @override
   void addAttribute(String key, Object value) {}
