@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:behaviour/behaviour.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -157,7 +159,7 @@ void main() {
       test('should invoke the ifException when [Failed future]', () async {
         // act
         final exception = Exception(faker.lorem.sentence());
-        final failed = Future.value(Failed(exception));
+        final FutureOr<ExceptionOr> failed = Future.value(Failed(exception));
 
         // assert
         await failed.thenWhen(
@@ -169,7 +171,7 @@ void main() {
       test('should invoke the ifSuccess when [Success future]', () async {
         // act
         final value = faker.lorem.sentence();
-        final success = Future.value(Success(value));
+        final FutureOr<ExceptionOr> success = Future.value(Success(value));
 
         // assert
         await success.thenWhen(
