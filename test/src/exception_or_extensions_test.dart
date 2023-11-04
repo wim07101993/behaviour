@@ -153,6 +153,30 @@ void main() {
           (v) => expect(v, value),
         );
       });
+
+      test('should invoke the ifException when [Failed future]', () async {
+        // act
+        final exception = Exception(faker.lorem.sentence());
+        final failed = Future.value(Failed(exception));
+
+        // assert
+        await failed.thenWhen(
+          (e) => expect(e, exception),
+          (value) => throw AssertionError('Should have invoked success.'),
+        );
+      });
+
+      test('should invoke the ifSuccess when [Success future]', () async {
+        // act
+        final value = faker.lorem.sentence();
+        final success = Future.value(Success(value));
+
+        // assert
+        await success.thenWhen(
+          (exception) => throw AssertionError('Should have invoked exception.'),
+          (v) => expect(v, value),
+        );
+      });
     });
 
     group('startNextWhenSuccess', () {
