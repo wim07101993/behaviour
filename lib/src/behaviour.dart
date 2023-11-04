@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:behaviour/behaviour.dart';
 
 /// A [Behaviour] is a type which only has one function, it's behaviour. It is
@@ -15,16 +17,19 @@ abstract class Behaviour<TIn, TOut> extends BehaviourBase
     implements BehaviourInterface<TIn, TOut> {
   /// Super does not need to be called by it's implementers. It only sets the
   /// [monitor] by which the behaviour can be monitored.
-  Behaviour({
-    BehaviourMonitor? monitor,
-  }) : super(monitor: monitor);
+  Behaviour({super.monitor});
 
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped
   /// in a [Failed].
   @override
-  Future<ExceptionOr<TOut>> call(TIn input) {
-    return executeAction((track) async => Success(await action(input, track)));
+  FutureOr<ExceptionOr<TOut>> call(TIn input) {
+    return executeAction((track) {
+      return action(input, track).whenFutureOrValue(
+        (future) => future.then((result) => Success(result)),
+        (result) => Success(result),
+      );
+    });
   }
 
   /// [action] contains the actual logic of the behaviour.
@@ -33,5 +38,5 @@ abstract class Behaviour<TIn, TOut> extends BehaviourBase
   /// [BehaviourTrack.end], [BehaviourTrack.stopWithException] and
   /// [BehaviourTrack.stopWithError] are called from the super class.
   @override
-  Future<TOut> action(TIn input, BehaviourTrack? track);
+  FutureOr<TOut> action(TIn input, BehaviourTrack? track);
 }

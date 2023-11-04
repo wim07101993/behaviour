@@ -4,16 +4,15 @@ class _MockAction<TIn, TOut> extends Mock implements _Action<TIn, TOut> {}
 
 class _BehaviourImpl<TIn, TOut> extends Behaviour<TIn, TOut> {
   _BehaviourImpl({
-    required Future<TOut> Function(TIn input, BehaviourTrack? track) action,
+    required FutureOr<TOut> Function(TIn input, BehaviourTrack? track) action,
     required this.description,
-    BehaviourMonitor? monitor,
-  })  : _action = action,
-        super(monitor: monitor);
+    super.monitor,
+  }) : _action = action;
 
-  final Future<TOut> Function(TIn input, BehaviourTrack? track) _action;
+  final FutureOr<TOut> Function(TIn input, BehaviourTrack? track) _action;
 
   @override
-  Future<TOut> action(TIn input, BehaviourTrack? track) {
+  FutureOr<TOut> action(TIn input, BehaviourTrack? track) {
     return _action(input, track);
   }
 
@@ -22,7 +21,13 @@ class _BehaviourImpl<TIn, TOut> extends Behaviour<TIn, TOut> {
 }
 
 class _Action<TIn, TOut> {
-  Future<TOut> action(TIn input, BehaviourTrack? track) {
+  FutureOr<TOut> action(TIn input, BehaviourTrack? track) {
     throw UnimplementedError();
   }
+}
+
+class _DummyType {
+  _DummyType(this.value);
+
+  final int value;
 }

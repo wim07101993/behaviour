@@ -17,7 +17,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(
       _BehaviourMixinImpl(
-        onCatchException: (e, stacktrace, track) => Exception(),
+        onCatchException: (e, stackTrace, track) => Exception(),
       ),
     );
     registerFallbackValue(Exception());
@@ -113,6 +113,21 @@ void main() {
       final result = await behaviour.executeAction((track) => expected);
 
       // assert
+      expect(identical(result, expected), isTrue);
+    });
+
+    test('should execute async and return result of action', () async {
+      // arrange
+      final expected = faker.randomGenerator.element<ExceptionOr<String>>([
+        Failed(Exception()),
+        Success(faker.lorem.word()),
+      ]);
+
+      // act
+      final result =
+          await behaviour.executeAction((track) => Future.value(expected));
+
+      // assert
       expect(result, expected);
     });
 
@@ -124,6 +139,25 @@ void main() {
 
       // act
       final result = await behaviour.executeAction((track) => throw exception);
+
+      // assert
+      expect(result, isA<Failed>());
+      final resultException = (result as Failed).reason;
+      expect(identical(resultException, exception), isTrue);
+      verify(() => mockTrack.stopWithException(exception, any()));
+    });
+
+    test(
+        'should stop track with exception and return failed if an exception happens in async action',
+        () async {
+      // arrange
+      final exception = Exception();
+
+      // act
+      final result = await behaviour.executeAction((track) async {
+        await Future.delayed(const Duration(milliseconds: 1));
+        throw exception;
+      });
 
       // assert
       expect(result, isA<Failed>());
@@ -156,6 +190,29 @@ void main() {
       final exception = Exception();
       when(() => mockOnCatch.onCatch(any(), any(), any())).thenAnswer((_) {
         return exception;
+      });
+      behaviour = _BehaviourMixinImpl(onCatchError: mockOnCatch.onCatch);
+
+      // act
+      final result = await behaviour.executeAction((track) => throw error);
+
+      // assert
+      expect(result, isA<Failed>());
+      result.when(
+        (e) => expect(e, exception),
+        (value) => throw AssertionError('The result should be a failed.'),
+      );
+    });
+
+    test(
+        'should return failed if an unknown error happens in the action using the async catch',
+        () async {
+      // arrange
+      final error = faker.lorem.sentence();
+      final mockOnCatch = _MockOnCatch();
+      final exception = Exception();
+      when(() => mockOnCatch.onCatch(any(), any(), any())).thenAnswer((_) {
+        return Future.value(exception);
       });
       behaviour = _BehaviourMixinImpl(onCatchError: mockOnCatch.onCatch);
 

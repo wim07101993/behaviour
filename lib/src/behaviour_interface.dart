@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:behaviour/behaviour.dart';
 
 /// A [BehaviourInterface] is a type which only has one function, it's
@@ -15,7 +17,7 @@ abstract class BehaviourInterface<TIn, TOut> {
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped
   /// in a [Failed].
-  Future<ExceptionOr<TOut>> call(TIn input);
+  FutureOr<ExceptionOr<TOut>> call(TIn input);
 
   /// [action] contains the actual logic of the behaviour.
   ///
@@ -25,5 +27,5 @@ abstract class BehaviourInterface<TIn, TOut> {
   /// [track] can be used for monitoring. The [BehaviourTrack.start],
   /// [BehaviourTrack.end], [BehaviourTrack.stopWithException] and
   /// [BehaviourTrack.stopWithError] are called from the super class.
-  Future<TOut> action(TIn input, BehaviourTrack? track);
+  FutureOr<TOut> action(TIn input, BehaviourTrack? track);
 }

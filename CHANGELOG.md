@@ -1,3 +1,9 @@
+## 3.0.0
+
+* feat!: upgraded to dart v3
+  - removed `whenSuccess` and `whenFailed` methods + variants from `ExceptionOr`
+* feat: better usage of `FutureOr` functionality
+
 ## 2.1.1
 
 * ci stuff
