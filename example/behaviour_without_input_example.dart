@@ -29,6 +29,6 @@ Future<void> main() async {
   final getProfileData = GetProfileData();
   await getProfileData().thenWhen(
     (exception) => log('Exception: $exception'),
-    (value) => log('value: $value'),
+    (value) => log('value: ${value.name} - ${value.birthday}'),
   );
 }
