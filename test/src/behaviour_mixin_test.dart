@@ -203,6 +203,29 @@ void main() {
         (value) => throw AssertionError('The result should be a failed.'),
       );
     });
+
+    test(
+        'should return failed if an unknown error happens in the action using the async catch',
+        () async {
+      // arrange
+      final error = faker.lorem.sentence();
+      final mockOnCatch = _MockOnCatch();
+      final exception = Exception();
+      when(() => mockOnCatch.onCatch(any(), any(), any())).thenAnswer((_) {
+        return Future.value(exception);
+      });
+      behaviour = _BehaviourMixinImpl(onCatchError: mockOnCatch.onCatch);
+
+      // act
+      final result = await behaviour.executeAction((track) => throw error);
+
+      // assert
+      expect(result, isA<Failed>());
+      result.when(
+        (e) => expect(e, exception),
+        (value) => throw AssertionError('The result should be a failed.'),
+      );
+    });
   });
 
   group('onCatchException', () {
