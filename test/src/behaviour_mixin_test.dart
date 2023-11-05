@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:behaviour/behaviour.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';

@@ -1,3 +1,7 @@
+## 3.0.1
+
+* feat: export `dart:async`
+
 ## 3.0.0
 
 * feat!: upgraded to dart v3

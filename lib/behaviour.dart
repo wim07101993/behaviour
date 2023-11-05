@@ -2,6 +2,8 @@
 /// the instances are used as functions.
 library behaviour;
 
+export 'dart:async';
+
 export 'src/behaviour.dart';
 export 'src/behaviour_base.dart';
 export 'src/behaviour_interface.dart';

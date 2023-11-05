@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:behaviour/behaviour.dart';
 
 extension ExceptionOrExtensions<TSuccess> on ExceptionOr<TSuccess> {

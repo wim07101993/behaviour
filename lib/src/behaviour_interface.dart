@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:behaviour/behaviour.dart';
 
 /// A [BehaviourInterface] is a type which only has one function, it's
