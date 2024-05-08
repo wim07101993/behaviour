@@ -89,9 +89,24 @@ void main() {
       });
     });
 
-    test('should start and end the track', () async {
+    test('should start and end the track in case of sync', () async {
       // act
       await behaviour.executeAction((track) => const Success(Object()));
+
+      // assert
+      verifyInOrder([
+        () => mockTrack.start(),
+        () => mockTrack.end(),
+      ]);
+      verifyNever(() => mockTrack.stopWithError(any(), any()));
+      verifyNever(() => mockTrack.stopWithException(any(), any()));
+    });
+
+    test('should start and end the track in case of future', () async {
+      // act
+      await behaviour.executeAction(
+        (track) => Future.value(const Success(Object())),
+      );
 
       // assert
       verifyInOrder([
