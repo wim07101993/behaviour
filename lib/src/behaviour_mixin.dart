@@ -55,7 +55,9 @@ mixin BehaviourMixin {
     BehaviourTrack? track,
   ) async {
     try {
-      return await future;
+      final result = await future;
+      track?.end();
+      return result;
     } catch (error, stackTrace) {
       return _catch(error, stackTrace, track);
     }
