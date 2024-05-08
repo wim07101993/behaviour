@@ -1,3 +1,7 @@
+## 3.0.1
+
+* fix:  track was not ended when behaviour resulted in a future
+
 ## 3.0.0
 
 * feat!: upgraded to dart v3
