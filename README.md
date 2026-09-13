@@ -14,9 +14,10 @@ has one concern: executing one piece of logic, one behaviour. Because it still
 is a class, it can be injected where needed and/or mocked in testing.
 
 A behaviour itself will never throw an exception. All exceptions/errors are
-caught and returned in a `ExceptionOr<TSuccess>` format which is either a
-`Failed` or a `Success`. The `Failed` contains the exception and the `Success`
-contains the return value if any.
+caught and returned in a `FutureOr<ExceptionOr<TOut>>` format, where the
+`ExceptionOr` is either a `Failed` or a `Success`. The `Failed` holds the
+exception in its `reason` property and the `Success` holds the return value, if
+any, in its `value` property.
 
 ## Getting started
 

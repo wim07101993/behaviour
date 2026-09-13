@@ -1,0 +1,2 @@
+# Keep line endings consistent across platforms; `dart format` writes LF.
+* text=auto eol=lf
