@@ -1,7 +1,7 @@
 /// Abstract class which implementers are either a [Failed] or a [Success].
 ///
 /// Which one of the two implementers the actual instance is, can be found using
-/// the [when] method. [TSuccess] is the type of the value if the implementation
+/// the [ExceptionOrExtensions.when] method. [TSuccess] is the type of the value if the implementation
 /// is [Success]. The [Failed] also has this type parameter but can be ignored.
 sealed class ExceptionOr<TSuccess> {
   /// Private constructor which prevents other implementations than the ones in

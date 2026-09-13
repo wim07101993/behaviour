@@ -9,7 +9,7 @@ jobs:
   ensure-version-different-from-master:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       
       - name: remove current pubspec
         run: rm pubspec.yaml

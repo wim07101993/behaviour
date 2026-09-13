@@ -65,9 +65,8 @@ void main() {
 
     test('should catch everything', () async {
       // arrange
-      when(() => mockAction.action(any(), any())).thenAnswer((i) async {
-        throw faker.lorem.sentence();
-      });
+      when(() => mockAction.action(any(), any()))
+          .thenAnswer((i) => Future<dynamic>.error(faker.lorem.sentence()));
 
       // act
       await behaviour(Object());
@@ -87,8 +86,7 @@ void main() {
       expect(result, Success<dynamic>(value));
     });
 
-    test('should make use of the [FutureOr] functionality when success',
-        () async {
+    test('should make use of the [FutureOr] functionality when success', () {
       // arrange
       final value = _DummyType(1);
       when(() => mockAction.action(any(), any())).thenAnswer((i) => value);

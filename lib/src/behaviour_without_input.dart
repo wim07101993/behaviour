@@ -10,9 +10,9 @@ import 'package:behaviour/behaviour.dart';
 /// of the function. If an input parameter is needed, take a look at a
 /// [Behaviour].
 ///
-/// A behaviour returns when called an [Future<ExceptionOr<TSuccess>>] value.
+/// A behaviour returns when called a `FutureOr<ExceptionOr<TOut>>` value.
 /// This can either be a [Failed] or a [Success]. To query which one it is
-/// call the [thenWhen] method on the [Future].
+/// call the [FutureOrExceptionOrExtensions.thenWhen] method on the result.
 abstract class BehaviourWithoutInput<TOut> extends BehaviourBase
     implements BehaviourWithoutInputInterface<TOut> {
   /// Super does not need to be called by it's implementers. It only sets the
