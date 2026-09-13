@@ -28,7 +28,7 @@ any, in its `value` property.
 The standard behaviour receives an input parameter of type `TIn` and returns a
 `TOut`. If no output parameter is required it can be made `void`. A behaviour
 returns when called a `FutureOr<ExceptionOr<TOut>>` value. For more details
-about that look at the [Return value](#Return-value).
+about that look at the [Return value](#return-value).
 
 ```dart
 class CreateCustomer extends Behaviour<CreateCustomerParams, void> {
@@ -59,7 +59,7 @@ class CreateCustomerParams {
 This behaviour does not receive an input parameter and returns a `TOut`. If no
 output parameter is required it can be made `void`. A behaviour returns when
 called a `FutureOr<ExceptionOr<TOut>>` value. For more details about that look
-at the [Return value](#Return-value).
+at the [Return value](#return-value).
 
 ```dart 
 class GetProfileData extends BehaviourWithoutInput<ProfileData> {
