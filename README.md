@@ -26,7 +26,7 @@ contains the return value if any.
 
 The standard behaviour receives an input parameter of type `TIn` and returns a
 `TOut`. If no output parameter is required it can be made `void`. A behaviour
-returns when called an `Future<ExceptionOr<TSuccess>>` value. For more details
+returns when called a `FutureOr<ExceptionOr<TOut>>` value. For more details
 about that look at the [Return value](#Return-value).
 
 ```dart
@@ -57,8 +57,8 @@ class CreateCustomerParams {
 
 This behaviour does not receive an input parameter and returns a `TOut`. If no
 output parameter is required it can be made `void`. A behaviour returns when
-called an `ExceptionOr<TSuccess>` value. For more details about that look at
-the [Return value](#Return-value).
+called a `FutureOr<ExceptionOr<TOut>>` value. For more details about that look
+at the [Return value](#Return-value).
 
 ```dart 
 class GetProfileData extends BehaviourWithoutInput<ProfileData> {
@@ -84,14 +84,15 @@ class ProfileData {
 
 ## Return value
 
-The return value of a behaviour is always an `ExceptionOr<TSuccess>` value. This
-is an abstract class with two implementers: `Failed<TSuccess>`
-and `Success<TSuccess>` with each an `exception` and `value` property
-respectively. To determine what the received value is, the `when` method is
-provided (and `thenWhen` for async methods).
+The return value of a behaviour is always a `FutureOr<ExceptionOr<TOut>>` value.
+`ExceptionOr` is a sealed class with two implementers: `Failed<TSuccess>` and
+`Success<TSuccess>` with each a `reason` and `value` property respectively. To
+determine what the received value is, the `when` method is provided (and
+`thenWhen` for asynchronous results).
 
 ```dart
-Future<void> main() {
+Future<void> main() async {
+  final getProfileData = GetProfileData();
   await getProfileData().thenWhen(
     (exception) => log('Exception: $exception'),
     (value) => log('value: $value'),

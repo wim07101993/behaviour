@@ -10,9 +10,9 @@ import 'package:behaviour/behaviour.dart';
 /// and [TOut] is the type of the return value of the function. If no input
 /// parameter is needed take a look at a [BehaviourWithoutInput].
 ///
-/// A behaviour returns when called an [Future<ExceptionOr<TSuccess>>] value.
+/// A behaviour returns when called a `FutureOr<ExceptionOr<TOut>>` value.
 /// This can either be a [Failed] or a [Success]. To query which one it is
-/// call the [thenWhen] method on the [Future].
+/// call the [FutureOrExceptionOrExtensions.thenWhen] method on the result.
 abstract class BehaviourInterface<TIn, TOut> {
   /// [call] executes the action of the behaviour. If the action is successful,
   /// the return value is wrapped in a [Success] else the exception is wrapped

@@ -10,8 +10,8 @@ extension ExceptionOrExtensions<TSuccess> on ExceptionOr<TSuccess> {
     TResult Function(TSuccess value) ifSuccess,
   ) {
     return switch (this) {
-      Failed<TSuccess>(reason: final reason) => ifFailed(reason),
-      Success<TSuccess>(value: final value) => ifSuccess(value),
+      Failed<TSuccess>(:final reason) => ifFailed(reason),
+      Success<TSuccess>(:final value) => ifSuccess(value),
     };
   }
 
@@ -20,8 +20,8 @@ extension ExceptionOrExtensions<TSuccess> on ExceptionOr<TSuccess> {
     ExceptionOr<TSecondSuccess> Function(TSuccess value) next,
   ) {
     return switch (this) {
-      Failed<TSuccess>(reason: final reason) => Failed(reason),
-      Success<TSuccess>(value: final value) => next(value),
+      Failed<TSuccess>(:final reason) => Failed(reason),
+      Success<TSuccess>(:final value) => next(value),
     };
   }
 }
@@ -35,8 +35,8 @@ extension FutureExceptionOrExtensions<T> on Future<ExceptionOr<T>> {
   ) {
     return then((value) {
       return switch (value) {
-        Failed<T>(reason: final reason) => ifFailed(reason),
-        Success<T>(value: final value) => ifSuccess(value),
+        Failed<T>(:final reason) => ifFailed(reason),
+        Success<T>(:final value) => ifSuccess(value),
       };
     });
   }

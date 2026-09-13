@@ -32,9 +32,10 @@ mixin BehaviourMixin {
   /// and when an something is caught, an 'exception' or 'error' attribute
   /// is added to the track.
   ///
-  /// When something is caught in the try catch, the [onCatch] method is called
-  /// with the caught object, stackTrace and track as parameters. The result
-  /// of this [onCatch] method is then wrapped within a [Failed] and is returned.
+  /// When something is caught in the try catch, [onCatchException] (for an
+  /// [Exception]) or [onCatchError] (for anything else) is called with the
+  /// caught object, stackTrace and track as parameters. The resulting exception
+  /// is then wrapped within a [Failed] and is returned.
   FutureOr<ExceptionOr<TOut>> executeAction<TOut>(Action<TOut> action) {
     final track = monitor?.createBehaviourTrack(this);
     try {
@@ -59,7 +60,7 @@ mixin BehaviourMixin {
       track?.end();
       return result;
     } catch (error, stackTrace) {
-      return _catch(error, stackTrace, track);
+      return await _catch(error, stackTrace, track);
     }
   }
 
